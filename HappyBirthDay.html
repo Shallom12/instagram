@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 To.예린누나의 생일을 진심으로 축하드려요 🎂</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><polygon fill="rgba(255,255,255,0.1)" points="0,0 1000,0 1000,100 0,0"/></svg>');
+            background-size: cover;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #2d3436;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #74b9ff, #0984e3);
+            border-radius: 2px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(116, 185, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .interest-card {
+            background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .interest-card:hover {
+            transform: scale(1.05);
+        }
+
+        .interest-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blessing-button {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 1rem auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.3);
+        }
+
+        .blessing-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(116, 185, 255, 0.4);
+        }
+
+        .blessing-message {
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+            color: #2d3436;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .blessing-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .music-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .music-section h3 {
+            color: #2d3436;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .bible-verse {
+            background: rgba(255, 255, 255, 0.9);
+            border-left: 4px solid #74b9ff;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .teacher-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .teacher-section::before {
+            content: '📚';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .final-message {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: 50px 50px;
+        }
+
+        .final-message p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .signature {
+            margin-top: 2rem;
+            font-weight: 500;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #2d3436;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                border-radius: 16px;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .interests-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 182, 193, 0.3);
+            font-size: 1.5rem;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-10vh) rotate(180deg);
+            }
+        }
+        .main-video-container {
+            width: 100%; /* 부모 너비에 맞춤 */
+            max-width: 640px; /* 최대 너비 설정 */
+            margin: 2rem auto; /* 가운데 정렬 및 상하 여백 */
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 비율 (높이/너비 * 100%) */
+            height: 0;
+            overflow: hidden;
+            background-color: #000; /* 영상 로드 전 배경색 */
+            border-radius: 10px; /* 둥근 모서리 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none; /* iframe 기본 테두리 제거 */
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts">
+        <div class="heart" style="left: 10%; animation-delay: 0s;">🎁</div>
+        <div class="heart" style="left: 20%; animation-delay: 1s;">✨</div>
+        <div class="heart" style="left: 30%; animation-delay: 2s;">💫</div>
+        <div class="heart" style="left: 40%; animation-delay: 3s;">💩</div>
+        <div class="heart" style="left: 50%; animation-delay: 4s;">🐵</div>
+        <div class="heart" style="left: 60%; animation-delay: 5s;">🦍</div>
+        <div class="heart" style="left: 70%; animation-delay: 6s;">🐶</div>
+        <div class="heart" style="left: 80%; animation-delay: 7s;">🌟</div>
+        <div class="heart" style="left: 90%; animation-delay: 8s;">🎁</div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Happy BirthDay To You🎉</h1>
+            <p>God Bless You & I will pray for you🙏</p>
+        </header>
+        <div class="main-video-container">
+            <iframe
+              src="https://www.youtube.com/embed/kt9n5E71EPI?si=UwIw1wgq51Ah9CnU"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        <div class="content">
+            <section class="section">
+                <h2>Congratulation</h2>
+                <div class="card">
+                    <p>언제나 밝은 에너지와 따뜻한 마음으로 주변을 환하게 만드시는 예린누나의 삶을 응원합니다.</p>
+                    <p>오늘 하루가 특별한 기쁨과 하나님의 축복으로 가득하시길 바랍니다.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Yerin's interests</h2>
+                <div class="interests-grid">
+                    <div class="interest-card">
+                        <h3>🎵 Music</h3>
+                        <p>볼빨간사춘기의 Travel</p>
+                        <iframe width="100%" height="185" src="https://www.youtube.com/embed/0i2wOl5PDOw?si=XLD8q6PHu4veBYe7" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    
+                    </div>
+                    <div class="interest-card">
+                        <h3>🙏 Faith</h3>
+                        <p>예수전도단의 Winning All</p>
+                        <iframe width="100%" height="185" src="https://www.youtube.com/embed/rBCgEXGy2fM?si=2RVHi1YL7j8mEFO7" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    
+                    </div>
+                    <div class="interest-card">
+                        <h3>🐶 Pet</h3>
+                        <p>반려동물과 함께하는 일상</p>
+                        <img src="https://github.com/Shallom12/instagram/blob/main/IMG_0277.jpg?raw=true" width="100%" height="185" >
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Special</h2>
+                <div class="card">
+                    <button class="blessing-button" onclick="showBlessing()">
+                        축복의 메시지 받기 ✨
+                    </button>
+                    <div class="blessing-message" id="blessingMessage"></div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>음악과 찬양</h2>
+                <div class="music-section">
+                    <h3>🎶 마음을 따뜻하게 하는 선율</h3>
+                    <p>예린누나께서 좋아하시는 볼빨간사춘기의 감성적인 노래와 예수전도단의 은혜로운 찬양과 함께 더욱 특별한 하루가 되길 바래요.</p>
+                    
+                    <div class="bible-verse">
+                        <p>여호와는 네게 복을 주시고 너를 지키시기를 원하며 여호와는 그 얼굴로 네게 비취사 </p> 
+                        <p>은혜 베푸시기를 원하며 여호와는 그 얼굴을 네게로 향하여 드사 평강 주시기를 원하노라</p><br>
+                        <strong>- 민수기 6:24-25</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Mission</h2>
+                <div class="teacher-section">
+                    <p>초등학교 영어 선생님으로서 아이들에게 지식뿐만 아니라 사랑으로 대하시는 예린누나의 모습이 참 아름다운것 같아요.</p>
+                    <p>하나님께서 주신 귀한 사명을 감당하며 아이들의 꿈을 키워주시는 선생님의 역할을 감당하시는게 대단하신것 같아요.</p>
+                    <p>오늘 하루 즐거운 생일이 되시길 바래요.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="final-message">
+                    <h2 style="color: white; margin-bottom: 1.5rem;">마음을 담아</h2>
+                    <p>앞으로도 건강하시고 하나님의 은혜가 예린누나와 늘 함께하시기를 기도하겠습니다.</p>
+                    <p>다시 한 번 생일 축하드리며, 새로운 한 해도 주님 안에서 기쁘고 복된 날들 되시길 바랍니다.</p>
+                    <div class="signature">
+                        from.주은🙏
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 예린누나의 특별한 생일을 축하하며</p>
+    </footer>
+
+    <script>
+        // 스크롤 시 섹션 나타나기
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // 축복 메시지 표시
+        const blessings = [
+            "오늘 하루가 특별한 기쁨과 감사로 가득하시길 바랍니다.",
+            "하나님의 은혜가 예린 님의 삶에 항상 함께하시기를 기도합니다.",
+            "새로운 한 해도 건강하시고 행복한 날들 되시길 소망합니다.",
+            "주님 안에서 평안과 기쁨이 가득한 생일 되시길 바랍니다.",
+            "예린 누나의 꿈과 소망이 하나님의 뜻 안에서 이루어지기를 응원합니다."
+        ];
+
+        function showBlessing() {
+            const messageDiv = document.getElementById('blessingMessage');
+            const randomMessage = blessings[Math.floor(Math.random() * blessings.length)];
+            
+            messageDiv.textContent = randomMessage;
+            messageDiv.classList.add('show');
+            
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+            }, 4000);
+        }
+
+        // 페이지 로드 시 첫 번째 섹션 표시
+        window.addEventListener('load', () => {
+            sections[0].classList.add('visible');
+        });
+    </script>
+</body>
+</html>
